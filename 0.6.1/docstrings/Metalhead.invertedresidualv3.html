@@ -25,27 +25,29 @@
         <input id="search-input" placeholder="Search">
         <select id="version-selector"></select>
     </div>
-    <main id="page"><article><div class='docs' id='resnextblock'>
-<p><code>private</code> <code>resnextblock</code> — <code>function</code></p>
+    <main id="page"><article><div class='docs' id='invertedresidualv3'>
+<p><code>private</code> <code>invertedresidualv3</code> — <code>function</code></p>
 <div class='doc' id='1'>
-<pre><code>resnextblock(inplanes, outplanes, cardinality, width, downsample = false)
+<pre><code>invertedresidualv3(inplanes, hidden_planes, outplanes, kernel_size, stride, use_se, use_hs)
 </code></pre>
-<p>Create a basic residual block as defined in the paper for ResNeXt
-(<a href="https://arxiv.org/abs/1611.05431">reference</a>).</p>
-<h1 id="arguments"><a href="#arguments" class="anchor"></a>Arguments:</h1>
+<p>Create a basic inverted residual block for MobileNetv3
+(<a href="https://arxiv.org/abs/1905.02244">reference</a>).</p>
+<h1 id="arguments"><a href="#arguments" class="anchor"></a>Arguments</h1>
 <ul>
-<li><code>inplanes</code>: the number of input feature maps</li>
-<li><code>outplanes</code>: the number of output feature maps</li>
-<li><code>cardinality</code>: the number of groups to use for the convolution</li>
-<li><code>width</code>: the number of feature maps in each group in the bottleneck</li>
-<li><code>downsample</code>: set to <code>true</code> to downsample the input</li>
+<li><code>inplanes</code>: The number of input feature maps</li>
+<li><code>hidden_planes</code>: The number of feature maps in the hidden layer</li>
+<li><code>outplanes</code>: The number of output feature maps</li>
+<li><code>kernel_size</code>: The kernel size of the convolutional layers</li>
+<li><code>stride</code>: The stride of the convolutional kernel, has to be either 1 or 2</li>
+<li><code>use_se</code>: If <code>true</code>, Squeeze and Excitation layer will be used</li>
+<li><code>use_hs</code>: If <code>true</code>, Hard-Swish activation function will be used</li>
 </ul>
 </div>
 </div>
 </article>
         <div id="page-navigation">
-            <a id="previous-page" title="Previous" href="Metalhead.resnext.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.2426 6.34317L14.8284 4.92896L7.75739 12L14.8285 19.0711L16.2427 17.6569L10.5858 12L16.2426 6.34317Z" fill="currentColor" /></svg></a>
-            <a id="next-page" title="Next" href="Metalhead.selayer.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor" /></svg></a>
+            <a id="previous-page" title="Previous" href="Metalhead.invertedresidualv2.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.2426 6.34317L14.8284 4.92896L7.75739 12L14.8285 19.0711L16.2427 17.6569L10.5858 12L16.2426 6.34317Z" fill="currentColor" /></svg></a>
+            <a id="next-page" title="Next" href="Metalhead.loadpretrain!.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor" /></svg></a>
         </div>
     </main>
     <nav id="toc"><p><a href="../README.html">Introduction</a></p>

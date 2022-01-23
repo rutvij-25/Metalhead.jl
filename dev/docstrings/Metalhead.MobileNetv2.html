@@ -25,27 +25,29 @@
         <input id="search-input" placeholder="Search">
         <select id="version-selector"></select>
     </div>
-    <main id="page"><article><div class='docs' id='resnextblock'>
-<p><code>private</code> <code>resnextblock</code> — <code>function</code></p>
+    <main id="page"><article><div class='docs' id='MobileNetv2'>
+<p><code>public</code> <code>MobileNetv2</code> — <code>struct</code></p>
 <div class='doc' id='1'>
-<pre><code>resnextblock(inplanes, outplanes, cardinality, width, downsample = false)
+<pre><code>MobileNetv2(width_mult = 1.0; pretrain = false, nclasses = 1000)
 </code></pre>
-<p>Create a basic residual block as defined in the paper for ResNeXt
-(<a href="https://arxiv.org/abs/1611.05431">reference</a>).</p>
-<h1 id="arguments"><a href="#arguments" class="anchor"></a>Arguments:</h1>
+<p>Create a MobileNetv2 model with the specified configuration.
+(<a href="https://arxiv.org/abs/1801.04381">reference</a>).
+Set <code>pretrain</code> to <code>true</code> to load the pretrained weights for ImageNet.</p>
+<h1 id="arguments"><a href="#arguments" class="anchor"></a>Arguments</h1>
 <ul>
-<li><code>inplanes</code>: the number of input feature maps</li>
-<li><code>outplanes</code>: the number of output feature maps</li>
-<li><code>cardinality</code>: the number of groups to use for the convolution</li>
-<li><code>width</code>: the number of feature maps in each group in the bottleneck</li>
-<li><code>downsample</code>: set to <code>true</code> to downsample the input</li>
+<li><code>width_mult</code>: Controls the number of output feature maps in each block
+(with 1.0 being the default in the paper;
+this is usually a value between 0.1 and 1.4)</li>
+<li><code>pretrain</code>: Whether to load the pre-trained weights for ImageNet</li>
+<li><code>nclasses</code>: The number of output classes</li>
 </ul>
+<p>See also <a href="Metalhead.mobilenetv2.html"><code>Metalhead.mobilenetv2</code></a>.</p>
 </div>
 </div>
 </article>
         <div id="page-navigation">
-            <a id="previous-page" title="Previous" href="Metalhead.resnext.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.2426 6.34317L14.8284 4.92896L7.75739 12L14.8285 19.0711L16.2427 17.6569L10.5858 12L16.2426 6.34317Z" fill="currentColor" /></svg></a>
-            <a id="next-page" title="Next" href="Metalhead.selayer.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor" /></svg></a>
+            <a id="previous-page" title="Previous" href="Metalhead.Inception3.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.2426 6.34317L14.8284 4.92896L7.75739 12L14.8285 19.0711L16.2427 17.6569L10.5858 12L16.2426 6.34317Z" fill="currentColor" /></svg></a>
+            <a id="next-page" title="Next" href="Metalhead.MobileNetv3.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor" /></svg></a>
         </div>
     </main>
     <nav id="toc"><p><a href="../README.html">Introduction</a></p>
