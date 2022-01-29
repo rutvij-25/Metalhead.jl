@@ -28,29 +28,39 @@
     <main id="page"><article><div class='docs' id='VGG'>
 <p><code>public</code> <code>VGG</code> — <code>struct</code></p>
 <div class='doc' id='1'>
-<pre><code>VGG(imsize = (224, 224); config, inchannels, batchnorm = false, nclasses, fcsize, dropout)
+<pre><code>VGG(imsize::NTuple{2,Int}; config, inchannels, batchnorm = false, nclasses, fcsize, dropout)
 </code></pre>
-<p>Create a <code>VGG</code> model
-(<a href="https://arxiv.org/abs/1409.1556v6">reference</a>).
-See also <a href="Metalhead.vgg.html"><code>vgg</code></a>.</p>
-<h1 id="arguments"><a href="#arguments" class="anchor"></a>Arguments</h1>
+<p>Construct a VGG model with the specified input image size. Typically, the image size is <code>(224, 224)</code>.</p>
+<h2 id="keyword-arguments"><a href="#keyword-arguments" class="anchor"></a>Keyword Arguments:</h2>
 <ul>
-<li><code>imsize</code>: input image width and height as a tuple</li>
-<li><code>config</code>: the configuration for the convolution layers
-(see <a href="Metalhead.vgg_convolutional_layers.html"><code>Metalhead.vgg_convolutional_layers</code></a>)</li>
-<li><code>inchannels</code>: number of input channels</li>
-<li><code>batchnorm</code>: set to <code>true</code> to use batch normalization after each convolution</li>
-<li><code>nclasses</code>: number of output classes</li>
+<li><code>config</code> : VGG convolutional block configuration. It is defined as a vector of tuples <code>(output_channels, num_convolutions)</code> for each block</li>
+<li><code>inchannels</code>::Int : number of input channels</li>
+<li><code>batchnorm</code>::Bool : set to <code>true</code> to use batch normalization after each convolution</li>
+<li><code>nclasses</code>::Int : number of output classes</li>
 <li><code>fcsize</code>: intermediate fully connected layer size
 (see <a href="Metalhead.vgg_classifier_layers.html"><code>Metalhead.vgg_classifier_layers</code></a>)</li>
 <li><code>dropout</code>: dropout level between fully connected layers</li>
+</ul>
+</div>
+<div class='doc' id='2'>
+<pre><code>VGG(depth::Int = 16; pretrain = false, batchnorm = false)
+</code></pre>
+<p>Create a VGG style model with specified <code>depth</code>. Available values include (11, 13, 16, 19).
+(<a href="https://arxiv.org/abs/1409.1556v6">reference</a>).
+See also <a href="Metalhead.VGG.html"><code>VGG</code></a>.</p>
+<div class="admonition warning"><p class="admonition-title">Warning</p>
+<p><code>VGG</code> does not currently support pretrained weights.</p>
+</div>
+<h1 id="arguments"><a href="#arguments" class="anchor"></a>Arguments</h1>
+<ul>
+<li><code>pretrain</code>: set to <code>true</code> to load pre-trained model weights for ImageNet</li>
 </ul>
 </div>
 </div>
 </article>
         <div id="page-navigation">
             <a id="previous-page" title="Previous" href="Metalhead.SqueezeNet.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.2426 6.34317L14.8284 4.92896L7.75739 12L14.8285 19.0711L16.2427 17.6569L10.5858 12L16.2426 6.34317Z" fill="currentColor" /></svg></a>
-            <a id="next-page" title="Next" href="Metalhead.VGG11.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor" /></svg></a>
+            <a id="next-page" title="Next" href="Metalhead._inceptionblock.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor" /></svg></a>
         </div>
     </main>
     <nav id="toc"><p><a href="../README.html">Introduction</a></p>

@@ -43,11 +43,26 @@ a new residual block (see <a href="Metalhead.basicblock.html"><code>Metalhead.ba
 <li><code>nclasses</code>: the number of output classes</li>
 </ul>
 </div>
+<div class='doc' id='2'>
+<pre><code>ResNet(depth = 50; pretrain = false, nclasses = 1000)
+</code></pre>
+<p>Create a ResNet model with a specified depth
+(<a href="https://arxiv.org/abs/1512.03385v1">reference</a>).
+See also <a href="Metalhead.resnet.html"><code>Metalhead.resnet</code></a>.</p>
+<h1 id="arguments-1"><a href="#arguments-1" class="anchor"></a>Arguments</h1>
+<ul>
+<li><code>depth</code>: depth of the ResNet model. Options include (18, 34, 50, 101, 152).</li>
+<li><code>nclasses</code>: the number of output classes</li>
+</ul>
+<div class="admonition warning"><p class="admonition-title">Warning</p>
+<p>Only <code>ResNet(50)</code> currently supports pretrained weights.</p>
+</div>
+</div>
 </div>
 </article>
         <div id="page-navigation">
             <a id="previous-page" title="Previous" href="Metalhead.ResNeXt.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.2426 6.34317L14.8284 4.92896L7.75739 12L14.8285 19.0711L16.2427 17.6569L10.5858 12L16.2426 6.34317Z" fill="currentColor" /></svg></a>
-            <a id="next-page" title="Next" href="Metalhead.ResNet101.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor" /></svg></a>
+            <a id="next-page" title="Next" href="Metalhead.SqueezeNet.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z" fill="currentColor" /></svg></a>
         </div>
     </main>
     <nav id="toc"><p><a href="../README.html">Introduction</a></p>
