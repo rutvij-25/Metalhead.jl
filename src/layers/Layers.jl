@@ -5,6 +5,7 @@ using Flux: outputsize, Zygote
 using Functors
 using Statistics
 using MLUtils
+using NeuralAttentionlib
 
 include("../utilities.jl")
 
@@ -13,12 +14,14 @@ include("embeddings.jl")
 include("mlp.jl")
 include("normalise.jl")
 include("conv.jl")
+include("others.jl")
 
-export Attention, MHAttention,
+export MHAttention,
        PatchEmbedding, ViPosEmbedding, ClassTokens,
-       mlp_block,
+       mlp_block, gated_mlp_block,
+       LayerScale, DropPath,
        ChannelLayerNorm, prenorm,
        skip_identity, skip_projection,
-       conv_bn,
+       conv_bn, depthwise_sep_conv_bn,
        invertedresidual, squeeze_excite
 end

@@ -83,6 +83,8 @@ end
   @test_skip gradtest(m, rand(Float32, 227, 227, 3, 2))
 end
 
+GC.gc()
+
 @testset "DenseNet" begin
   @testset for model in [DenseNet121, DenseNet161, DenseNet169, DenseNet201]
     m = model()
@@ -98,8 +100,19 @@ end
 end
 
 @testset "MobileNet" verbose = true begin
-  @testset "MobileNetv2" begin
+  @testset "MobileNetv1" begin
+    m = MobileNetv1()
 
+    @test size(m(rand(Float32, 224, 224, 3, 2))) == (1000, 2)
+    if MobileNetv1 in PRETRAINED_MODELS
+      @test (MobileNetv1(pretrain = true); true)
+    else
+      @test_throws ArgumentError MobileNetv1(pretrain = true)
+    end
+    @test_skip gradtest(m, rand(Float32, 224, 224, 3, 2))
+  end
+
+  @testset "MobileNetv2" begin
     m = MobileNetv2()
 
     @test size(m(rand(Float32, 224, 224, 3, 2))) == (1000, 2)
@@ -126,6 +139,8 @@ end
   end
 end
 
+GC.gc()
+
 @testset "ConvNeXt" verbose = true begin
   @testset for mode in [:tiny, :small, :base, :large, :xlarge]
     @testset for drop_path_rate in [0.0, 0.5, 0.99]
@@ -134,5 +149,17 @@ end
       @test size(m(rand(Float32, 224, 224, 3, 2))) == (1000, 2)
       @test_skip gradtest(m, rand(Float32, 224, 224, 3, 2))
     end
+    GC.gc()
+  end
+end
+
+GC.gc()
+
+@testset "ConvMixer" verbose = true begin
+  @testset for mode in [:base, :large, :small]
+    m = ConvMixer(mode)
+
+    @test size(m(rand(Float32, 224, 224, 3, 2))) == (1000, 2)
+    @test_skip gradtest(m, rand(Float32, 224, 224, 3, 2))
   end
 end
