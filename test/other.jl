@@ -19,10 +19,10 @@ end
   @testset for mode in [:small, :base, :large, :huge]
     @testset for drop_path_rate in [0.0, 0.5, 0.99]
       m = MLPMixer(mode; drop_path_rate)
-      @test size(m(rand(Float32, 224, 224, 3, 2))) == (1000, 2)
-      @test_skip gradtest(m, rand(Float32, 224, 224, 3, 2))
-      GC.gc()
+      @test size(m(rand(Float32, 224, 224, 3, 1))) == (1000, 1)
+      @test_skip gradtest(m, rand(Float32, 224, 224, 3, 1))
     end
+    GC.gc()
   end
 end
 
@@ -30,10 +30,10 @@ end
   @testset for mode in [:small, :base, :large, :huge]
     @testset for drop_path_rate in [0.0, 0.5, 0.99]
       m = ResMLP(mode; drop_path_rate)
-      @test size(m(rand(Float32, 224, 224, 3, 2))) == (1000, 2)
+      @test size(m(rand(Float32, 224, 224, 3, 1))) == (1000, 1)
       @test_skip gradtest(m, rand(Float32, 224, 224, 3, 1))
-      GC.gc()
     end
+    GC.gc()
   end
 end
 
@@ -41,10 +41,10 @@ end
   @testset for mode in [:small, :base, :large, :huge]
     @testset for drop_path_rate in [0.0, 0.5, 0.99]
       m = gMLP(mode; drop_path_rate)
-      @test size(m(rand(Float32, 224, 224, 3, 2))) == (1000, 2)
-      @test_skip gradtest(m, rand(Float32, 224, 224, 3, 2))
-      GC.gc()
+      @test size(m(rand(Float32, 224, 224, 3, 1))) == (1000, 1)
+      @test_skip gradtest(m, rand(Float32, 224, 224, 3, 1))
     end
+    GC.gc()
   end
 end
 >>>>>>> aba6fb832093d88dc2d2b4d5b1d2d63a0f21eb9c
