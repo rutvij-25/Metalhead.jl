@@ -1,10 +1,10 @@
 """
     conv_bn(kernelsize, inplanes, outplanes, activation = relu;
-            rev = false,
+            rev = false, preact = true,
             stride = 1, pad = 0, dilation = 1, groups = 1, [bias, weight, init],
             initβ = Flux.zeros32, initγ = Flux.ones32, ϵ = 1f-5, momentum = 1f-1)
 
-Create a convolution + batch normalization pair with ReLU activation.
+Create a convolution + batch normalization pair with activation.
 
 # Arguments
 - `kernelsize`: size of the convolution kernel (tuple)
@@ -12,6 +12,8 @@ Create a convolution + batch normalization pair with ReLU activation.
 - `outplanes`: number of output feature maps
 - `activation`: the activation function for the final layer
 - `rev`: set to `true` to place the batch norm before the convolution
+- `preact`: set to `true` to place the activation function before the batch norm
+            (only compatible with `rev = false`)
 - `stride`: stride of the convolution kernel
 - `pad`: padding of the convolution kernel
 - `dilation`: dilation of the convolution kernel
@@ -21,7 +23,7 @@ Create a convolution + batch normalization pair with ReLU activation.
 - `ϵ`, `momentum`: batch norm parameters (see [`Flux.BatchNorm`](#))
 """
 function conv_bn(kernelsize, inplanes, outplanes, activation = relu;
-                 rev = false,
+                 rev = false, preact = false,
                  initβ = Flux.zeros32, initγ = Flux.ones32, ϵ = 1f-5, momentum = 1f-1,
                  kwargs...)
   layers = []
@@ -34,6 +36,11 @@ function conv_bn(kernelsize, inplanes, outplanes, activation = relu;
     bnplanes = outplanes
   end
 
+  if preact
+    rev ? throw(ArgumentError("preact and rev cannot be set at the same time")) :
+          activations = (conv = activation, bn = identity)
+  end
+
   push!(layers, Conv(kernelsize, Int(inplanes) => Int(outplanes), activations.conv; kwargs...))
   push!(layers, BatchNorm(Int(bnplanes), activations.bn;
                           initβ = initβ, initγ = initγ, ϵ = ϵ, momentum = momentum))
@@ -41,6 +48,47 @@ function conv_bn(kernelsize, inplanes, outplanes, activation = relu;
   return rev ? reverse(layers) : layers
 end
 
+"""
+    depthwise_sep_conv_bn(kernelsize, inplanes, outplanes, activation = relu;
+                          rev = false,
+                          stride = 1, pad = 0, dilation = 1, [bias, weight, init],
+                          initβ = Flux.zeros32, initγ = Flux.ones32,
+                          ϵ = 1f-5, momentum = 1f-1)
+
+Create a depthwise separable convolution chain as used in MobileNet v1.
+This is sequence of layers:
+- a `kernelsize` depthwise convolution from `inplanes => inplanes`
+- a batch norm layer + `activation`
+- a `kernelsize` convolution from `inplanes => outplanes`
+- a batch norm layer + `activation`
+
+See Fig. 3 in [reference](https://arxiv.org/abs/1704.04861v1).
+
+# Arguments
+- `kernelsize`: size of the convolution kernel (tuple)
+- `inplanes`: number of input feature maps
+- `outplanes`: number of output feature maps
+- `activation`: the activation function for the final layer
+- `rev`: set to `true` to place the batch norm before the convolution
+- `stride`: stride of the first convolution kernel
+- `pad`: padding of the first convolution kernel
+- `dilation`: dilation of the first convolution kernel
+- `bias`, `weight`, `init`: initialization for the convolution kernel (see [`Flux.Conv`](#))
+- `initβ`, `initγ`: initialization for the batch norm (see [`Flux.BatchNorm`](#))
+- `ϵ`, `momentum`: batch norm parameters (see [`Flux.BatchNorm`](#))
+"""
+depthwise_sep_conv_bn(kernelsize, inplanes, outplanes, activation = relu;
+                      rev = false,
+                      initβ = Flux.zeros32, initγ = Flux.ones32,
+                      ϵ = 1f-5, momentum = 1f-1,
+                      stride = 1, kwargs...) =
+  vcat(conv_bn(kernelsize, inplanes, inplanes, activation;
+               rev = rev, initβ = initβ, initγ = initγ,
+               ϵ = ϵ, momentum = momentum,
+               stride = stride, groups = inplanes, kwargs...),
+       conv_bn((1, 1), inplanes, outplanes, activation;
+               rev = rev, initβ = initβ, initγ = initγ,
+               ϵ = ϵ, momentum = momentum))
 
 """
     skip_projection(inplanes, outplanes, downsample = false)
@@ -136,4 +184,3 @@ function invertedresidual(kernel_size, inplanes, hidden_planes, outplanes, activ
 end
 invertedresidual(kernel_size::Integer, args...; kwargs...) =
   invertedresidual((kernel_size, kernel_size), args...; kwargs...)
-
